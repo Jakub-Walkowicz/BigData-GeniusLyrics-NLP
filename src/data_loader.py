@@ -1,19 +1,19 @@
-from constants.constants import SCHEMA
 from pyspark.sql import SparkSession
 from pathlib import Path
 
+
+def get_dir_path():
+    base_dir = Path(__file__).resolve().parent.parent
+    return base_dir / "data" / "raw"
+
+
 class DataLoader:
     def __init__(self, spark: SparkSession):
-        self.path = self._get_path()
+        self.dir_path = get_dir_path()
         self.spark = spark
 
     def load_file(self):
-        return self.spark.read.csv(
-            self.path,
-            schema=SCHEMA,
-            header=True,
-        )
+        file_path = str(self.dir_path / "song_lyrics_parquet")
+        df = self.spark.read.parquet(file_path)
+        return df
 
-    def _get_path(self):
-        base_dir = Path(__file__).resolve().parent.parent
-        return str(base_dir / "data" / "raw" / "song_lyrics.csv")
