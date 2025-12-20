@@ -3,4 +3,6 @@ data/raw
 __pycache__/
 *.pyc
 .idea/
-.vscode/git a
+.vscode/git
+.DS_Store
+**/.DS_Store
