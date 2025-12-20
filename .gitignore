@@ -1,2 +1,6 @@
 data
-README.md
+.venv/
+__pycache__/
+*.pyc
+.idea/
+.vscode/git a
