@@ -1,6 +1,4 @@
-data/raw/song_lyrics_parquet
-data/raw/archive.zip
-data/raw/song_lyrics.csv
+data/
 .venv/
 __pycache__/
 *.pyc
