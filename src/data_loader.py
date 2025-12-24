@@ -9,11 +9,15 @@ def get_dir_path():
 
 class DataLoader:
     def __init__(self, spark: SparkSession):
-        self.dir_path = get_dir_path()
         self.spark = spark
+        self.raw_data_path = get_dir_path() / "song_lyrics.csv"
 
-    def load_file(self):
-        file_path = str(self.dir_path / "song_lyrics_parquet")
-        df = self.spark.read.parquet(file_path)
-        return df
+    def load_raw_csv(self):
+        return (self.spark.read
+                .option("header", "true")
+                .option("multiLine", "true")
+                .option("quote", "\"")
+                .option("escape", "\"")
+                .option("inferSchema", "true")
+                .csv(str(self.raw_data_path)))
 

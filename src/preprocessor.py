@@ -13,7 +13,7 @@ class Preprocessor:
 
     @staticmethod
     def _drop_nulls(df):
-        return df.na.drop()
+        return df.na.drop(subset=['lyrics'])
 
     @staticmethod
     def _remove_annotations(df):
