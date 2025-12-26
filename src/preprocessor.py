@@ -3,21 +3,17 @@ import pyspark.sql.functions as F
 class Preprocessor:
     @staticmethod
     def run(df):
-        return (df
-                .transform(Preprocessor._restrict_to_en_songs)
-                .transform(Preprocessor._drop_nulls)
-                .transform(Preprocessor._remove_annotations))
-    @staticmethod
-    def _restrict_to_en_songs(df):
-        return df.filter(F.col('language') == 'en')
+        df = df.na.drop(subset=['lyrics'])
+        df = df.filter(F.col('language') == 'pl')
+        return df.withColumn('lyrics_cleaned', Preprocessor._clean_text_logic(F.col('lyrics')))
 
     @staticmethod
-    def _drop_nulls(df):
-        return df.na.drop(subset=['lyrics'])
-
-    @staticmethod
-    def _remove_annotations(df):
-        return df.withColumn(
-            'lyrics_cleaned',
-            F.regexp_replace(F.col('lyrics'), r'\[[^\]]*\]', '')
-        )
+    def _clean_text_logic(col):
+        col = F.regexp_replace(col, r'\[[^\]]*\]', '')
+        col = F.regexp_replace(col, r'\([^)]*\)', '')
+        col = F.regexp_replace(col, r'[‘’`´]', "'")
+        col = F.regexp_replace(col, r'[ \t]+', ' ')
+        col = F.regexp_replace(col, r' *\n *', '\n')
+        col = F.regexp_replace(col, r'^\s+', '')
+        col = F.regexp_replace(col, r'\s+$', '')
+        return F.trim(col)

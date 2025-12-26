@@ -1,14 +1,15 @@
 from pyspark.sql import SparkSession
+import os
 
 def create_spark_session():
     spark = (SparkSession.builder
         .master("local[*]")
         .appName("GeniusLyricsBigDataProject")
         .config("spark.driver.memory", "6g")
-        # .config("spark.driver.extraJavaOptions", "-XX:MaxDirectMemorySize=4g")
-        # .config("spark.driver.maxResultSize", "2g")
         .getOrCreate()
     )
+    path_to_nlp = os.path.abspath("../src/nlp_processor.py")
+    spark.sparkContext.addPyFile(path_to_nlp)
     spark.sparkContext.setLogLevel("ERROR")
     return spark
 
