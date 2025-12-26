@@ -1,17 +1,29 @@
+# Data and binaries
 data/
 *.csv
 *.parquet
-infrastructure/cassandra/
 models/
+
+# Database files (Cassandra)
+infrastructure/cassandra/
+
+# .env
+.env
+docker/**/*.env
+
+# Local Python environment
 .venv/
+venv/
 __pycache__/
 *.pyc
+
+# IDE and System
 .idea/
-.vscode/git
+.vscode/
 .DS_Store
 **/.DS_Store
-docker/cassandra/*.env
-docker/spark/*.env
+
+# Logs
 logs/
 *.log
 checkpoint/

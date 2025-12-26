@@ -38,6 +38,7 @@ services:
 
   spark-worker:
     container_name: spark-worker
+    user: root
     hostname: spark-worker
     build:
       context: .
