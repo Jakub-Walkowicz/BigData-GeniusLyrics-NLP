@@ -1,4 +1,7 @@
 data/
+*.csv
+*.parquet
+infrastructure/cassandra/
 models/
 .venv/
 __pycache__/
@@ -7,3 +10,8 @@ __pycache__/
 .vscode/git
 .DS_Store
 **/.DS_Store
+docker/cassandra/*.env
+docker/spark/*.env
+logs/
+*.log
+checkpoint/

@@ -33,7 +33,9 @@ class FeatureExtractor:
             raise ValueError("Model must be fitted before transformation.")
         df_transformed = self.model.transform(df)
 
-        return df_transformed.withColumn("tfidf_array", vector_to_array("tfidf_vectors"))
+        return (df_transformed
+                .withColumn("tfidf_array", vector_to_array("tfidf_vectors"))
+                .drop("raw_features", "tfidf_vectors"))
 
     def save(self, path):
         if self.model:
