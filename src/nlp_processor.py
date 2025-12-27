@@ -1,7 +1,6 @@
 from pyspark.ml.feature import RegexTokenizer, StopWordsRemover
 from pyspark.sql.pandas.functions import pandas_udf
 from pyspark.sql.types import ArrayType, StringType
-import spacy
 import pl_core_news_sm
 import pandas as pd
 

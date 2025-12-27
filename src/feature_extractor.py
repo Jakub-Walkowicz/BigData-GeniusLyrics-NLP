@@ -2,12 +2,8 @@ from pyspark.ml.feature import CountVectorizer, IDF
 from pyspark.ml import Pipeline, PipelineModel
 from pyspark.sql.types import DoubleType, ArrayType
 from pyspark.sql.functions import pandas_udf
+from pyspark.ml.functions import vector_to_array
 import pandas as pd
-
-
-@pandas_udf(ArrayType(DoubleType()))
-def vector_to_array(series: pd.Series) -> pd.Series:
-    return series.apply(lambda v: v.toArray().tolist() if v is not None else None)
 
 class FeatureExtractor:
     def __init__(self, vocabSize, minDF):

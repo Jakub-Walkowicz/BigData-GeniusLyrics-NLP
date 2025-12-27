@@ -1,0 +1,6 @@
+pandas>=2.0.0
+pyarrow>=12.0.0
+numpy>=1.24.0
+jupyterlab>=4.0.0
+cassandra-driver>=3.29.0
+https://github.com/explosion/spacy-models/releases/download/pl_core_news_sm-3.7.0/pl_core_news_sm-3.7.0-py3-none-any.whl

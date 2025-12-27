@@ -2,19 +2,19 @@ services:
   cassandra:
     container_name: cassandra
     hostname: cassandra
-    image: cassandra:latest
+    image: cassandra:4.1
     ports:
-      - "9042:9042"
+      - '9042:9042'
     env_file:
       - docker/cassandra/cassandra.env
     volumes:
       - ./infrastructure/cassandra:/var/lib/cassandra
     healthcheck:
-      test: [ "CMD-SHELL", "cqlsh -e 'describe keyspaces'" ]
-      interval: 10s
+      test: [ "CMD", "nodetool", "status" ]
+      interval: 20s
       timeout: 5s
-      retries: 10
-    restart: always
+      retries: 5
+    restart: on-failure
 
   spark-master:
     container_name: spark-master
@@ -23,28 +23,27 @@ services:
       context: .
       dockerfile: ./docker/spark/Dockerfile
     env_file:
-      - docker/spark/master.env
+      - docker/spark/spark-master.env
     ports:
       - '8080:8080'
       - '7077:7077'
     healthcheck:
-      test: [ "CMD-SHELL", "timeout 5s bash -c '< /dev/tcp/localhost/8080'" ]
+      test: [ "CMD", "curl", "-f", "http://localhost:8080" ]
       interval: 10s
       timeout: 5s
       retries: 3
+      start_period: 10s
     volumes:
       - .:/opt/spark/work-dir
     command: /opt/spark/bin/spark-class org.apache.spark.deploy.master.Master
 
   spark-worker:
     container_name: spark-worker
-    user: root
-    hostname: spark-worker
     build:
       context: .
       dockerfile: ./docker/spark/Dockerfile
     env_file:
-      - docker/spark/worker.env
+      - docker/spark/spark-worker.env
     depends_on:
       spark-master:
         condition: service_healthy
@@ -59,7 +58,13 @@ services:
     build:
       context: .
       dockerfile: ./docker/spark/Dockerfile
-    user: root
-    ports: [ "8888:8888" ]
-    volumes: [ ".:/opt/spark/work-dir" ]
-    command: jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.token=''
+    ports:
+      - '8888:8888'
+    volumes:
+      - .:/opt/spark/work-dir
+    env_file:
+      - docker/spark/jupyter.env
+    depends_on:
+      spark-master:
+        condition: service_healthy
+    command: jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --NotebookApp.token='' --allow-root
