@@ -1,9 +1,6 @@
 from pyspark.ml.feature import CountVectorizer, IDF
 from pyspark.ml import Pipeline, PipelineModel
-from pyspark.sql.types import DoubleType, ArrayType
-from pyspark.sql.functions import pandas_udf
 from pyspark.ml.functions import vector_to_array
-import pandas as pd
 
 class FeatureExtractor:
     def __init__(self, vocabSize, minDF):
