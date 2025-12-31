@@ -9,12 +9,23 @@ services:
       - docker/cassandra/cassandra.env
     volumes:
       - ./infrastructure/cassandra:/var/lib/cassandra
+      - ./infrastructure/migration/init.cql:/docker-entrypoint-initdb.d/init.cql
     healthcheck:
       test: [ "CMD", "nodetool", "status" ]
       interval: 20s
       timeout: 5s
       retries: 5
     restart: on-failure
+
+  cassandra-init:
+    image: cassandra:4.1
+    container_name: cassandra-init
+    depends_on:
+      cassandra:
+        condition: service_healthy
+    volumes:
+      - ./infrastructure/migration/init.cql:/init.cql
+    command: /bin/bash -c "cqlsh cassandra -f /init.cql"
 
   spark-master:
     container_name: spark-master

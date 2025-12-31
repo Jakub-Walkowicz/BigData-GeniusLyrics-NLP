@@ -1,5 +1,9 @@
+from cassandra.cluster import Cluster
+import pyspark.sql.functions as F
+
 class CassandraProvider():
-    def __init__(self, keyspace='genius_space', table='processed_songs'):
+    def __init__(self, spark, keyspace='genius_space', table='processed_songs'):
+        self.spark = spark
         self.keyspace = keyspace
         self.table = table
 
