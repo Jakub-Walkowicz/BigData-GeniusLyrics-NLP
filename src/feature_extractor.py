@@ -1,23 +1,21 @@
-from pyspark.ml.feature import CountVectorizer, IDF
+from pyspark.ml.feature import Word2Vec
 from pyspark.ml import Pipeline, PipelineModel
-from pyspark.ml.functions import vector_to_array
 
 class FeatureExtractor:
-    def __init__(self, vocabSize, minDF):
+    def __init__(self, vectorSize=100, minCount=20):
         self.model = None
-        self.vocabSize = vocabSize
-        self.minDF = minDF
-
+        self.vectorSize = vectorSize
+        self.minCount = minCount
 
     def fit(self, df, inputCol="words_lemmatized"):
-        cv = CountVectorizer(
+        word2Vec = Word2Vec(
+            vectorSize=self.vectorSize,
+            minCount=self.minCount,
             inputCol=inputCol,
-            outputCol="raw_features",
-            vocabSize=self.vocabSize,
-            minDF=self.minDF
+            outputCol="word_vectors"
         )
-        idf = IDF(inputCol="raw_features", outputCol="tfidf_vectors")
-        pipeline = Pipeline(stages=[cv, idf])
+
+        pipeline = Pipeline(stages=[word2Vec])
         self.model = pipeline.fit(df)
         return self
 
@@ -26,9 +24,7 @@ class FeatureExtractor:
             raise ValueError("Model must be fitted before transformation.")
         df_transformed = self.model.transform(df)
 
-        return (df_transformed
-                .withColumn("tfidf_array", vector_to_array("tfidf_vectors"))
-                .drop("raw_features", "tfidf_vectors"))
+        return df_transformed
 
     def save(self, path):
         if self.model:

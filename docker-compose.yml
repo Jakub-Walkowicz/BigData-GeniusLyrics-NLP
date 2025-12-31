@@ -9,13 +9,16 @@ services:
       - docker/cassandra/cassandra.env
     volumes:
       - ./infrastructure/cassandra:/var/lib/cassandra
-      - ./infrastructure/migration/init.cql:/docker-entrypoint-initdb.d/init.cql
     healthcheck:
       test: [ "CMD", "nodetool", "status" ]
       interval: 20s
       timeout: 5s
       retries: 5
     restart: on-failure
+    deploy:
+      resources:
+        limits:
+          memory: 4G
 
   cassandra-init:
     image: cassandra:4.1
@@ -47,6 +50,10 @@ services:
     volumes:
       - .:/opt/spark/work-dir
     command: /opt/spark/bin/spark-class org.apache.spark.deploy.master.Master
+    deploy:
+      resources:
+        limits:
+          memory: 2G
 
   spark-worker:
     container_name: spark-worker
@@ -63,6 +70,10 @@ services:
     volumes:
       - .:/opt/spark/work-dir
     command: /opt/spark/bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077
+    deploy:
+      resources:
+        limits:
+          memory: 4G
 
   jupyter:
     container_name: jupyter
@@ -79,3 +90,7 @@ services:
       spark-master:
         condition: service_healthy
     command: jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --NotebookApp.token='' --allow-root
+    deploy:
+      resources:
+        limits:
+          memory: 2G

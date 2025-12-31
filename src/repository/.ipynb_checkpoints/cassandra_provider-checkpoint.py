@@ -1,14 +1,10 @@
-from cassandra.cluster import Cluster
-import pyspark.sql.functions as F
-
 class CassandraProvider():
-    def __init__(self, spark, keyspace='genius_space', table='processed_songs'):
-        self.spark = spark
+    def __init__(self, keyspace='genius_space', table='processed_songs'):
         self.keyspace = keyspace
         self.table = table
 
     def save(self, df):
-        required_cols = ["id", "artist", "title", "views", "tag", "tfidf_array"]
+        required_cols = ["id", "artist", "title", "views", "tag", "feature_array"]
 
         (df.select(*required_cols)
             .write
@@ -17,5 +13,9 @@ class CassandraProvider():
             .options(table=self.table, keyspace=self.keyspace)
             .save())
 
-    def load(self):
-        pass
+    def load(self, spark):
+        df = (spark.read
+          .format("org.apache.spark.sql.cassandra")
+          .options(table=self.table, keyspace=self.keyspace)
+          .load())
+        return df

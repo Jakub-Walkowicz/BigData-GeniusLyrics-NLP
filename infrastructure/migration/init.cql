@@ -7,5 +7,5 @@ CREATE TABLE IF NOT EXISTS genius_space.processed_songs (
     title TEXT,
     views BIGINT,
     tag TEXT,
-    tfidf_array list<DOUBLE>
+    feature_array list<DOUBLE>
 );
