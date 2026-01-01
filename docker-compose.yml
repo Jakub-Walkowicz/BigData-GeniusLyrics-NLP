@@ -8,7 +8,7 @@ services:
     env_file:
       - docker/cassandra/cassandra.env
     volumes:
-      - ./infrastructure/cassandra:/var/lib/cassandra
+      - cassandra_data:/var/lib/cassandra
     healthcheck:
       test: [ "CMD", "nodetool", "status" ]
       interval: 20s
@@ -94,3 +94,5 @@ services:
       resources:
         limits:
           memory: 2G
+volumes:
+  cassandra_data:

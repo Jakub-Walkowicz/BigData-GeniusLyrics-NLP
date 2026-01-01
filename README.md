@@ -41,3 +41,7 @@ Minimalne wymaganie to dwie metody ML, plan obejmuje trzy:
 | **1. Klasyfikacja** | Nadzorowana | Klasyfikacja Gatunku (np. Random Forest). | Accuracy, Precision/Recall, F1-Score. |
 | **2. Regresja** | Nadzorowana | Przewidywanie Popularności (`views`) (np. XGBoost). | RMSE (Root Mean Squared Error). |
 | **3. Generowanie Tekstu** | Nienadzorowana / Generatywna | **(Rozszerzenie)** Generowanie Tekstów Piosenek (np. LSTM / Keras). | - |
+
+
+
+Dolozyc 

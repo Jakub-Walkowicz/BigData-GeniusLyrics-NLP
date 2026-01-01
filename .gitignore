@@ -1,11 +1,8 @@
 # Data and binaries
-data/
-*.csv
-*.parquet
+data/**/*
+!data/**/
+!**/.gitkeep
 models/
-
-# Database files (Cassandra)
-infrastructure/cassandra/
 
 # .env
 .env
