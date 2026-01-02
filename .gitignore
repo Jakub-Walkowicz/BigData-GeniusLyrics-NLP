@@ -3,10 +3,10 @@ data/**/*
 !data/**/
 !**/.gitkeep
 models/
+*.csv
 
 # .env
 .env
-docker/**/*.env
 
 # Local Python environment
 .venv/

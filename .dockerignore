@@ -1,29 +1,22 @@
-# Data and binaries
-data/
-*.csv
-*.parquet
-
-# Infrastructure
-infrastructure/cassandra/
-.docker/
-
-# Local Python environment.venv/
-venv/
+# Python / IDE
 __pycache__/
 *.pyc
 .ipynb_checkpoints/
-
-# IDE
 .idea/
 .vscode/
+venv/
+.venv/
+
+# System / Logs
 .DS_Store
 **/.DS_Store
-.git
-.gitignore
-
-# Logs
 logs/
 *.log
-checkpoint/
 spark-warehouse/
 metastore_db/
+checkpoint/
+
+# Data
+data/
+*.csv
+*.parquet
