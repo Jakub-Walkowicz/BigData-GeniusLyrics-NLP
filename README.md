@@ -1,4 +1,4 @@
-# Genius Lyrics Big Data
+# Projekt zaliczeniowy "Genius Lyrics Big Data" z przedmiotu "Systemy BigData i NoSQL"
 
 ## Spis Treści
 1. [Wprowadzenie](#wprowadzenie)
