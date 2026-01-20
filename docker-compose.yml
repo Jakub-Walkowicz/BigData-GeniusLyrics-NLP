@@ -10,10 +10,11 @@ services:
     volumes:
       - cassandra_data:/var/lib/cassandra
     healthcheck:
-      test: [ "CMD", "nodetool", "status" ]
-      interval: 20s
-      timeout: 5s
-      retries: 5
+      test: ["CMD-SHELL", "cqlsh -e 'describe keyspaces'"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
     restart: on-failure
     deploy:
       resources:

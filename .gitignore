@@ -20,6 +20,7 @@ __pycache__/
 .DS_Store
 **/.DS_Store
 **/.ipynb_checkpoints/
+.java_opts.txt
 
 # Logs
 logs/
