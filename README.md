@@ -88,7 +88,7 @@ Notebook odpowiedzialny za trenowanie modeli.
    - Ewaluacja wyników (Accuracy, F1).
    - Analiza przykładowych predykcji.
 4. **Predykcja Wyświetleń**:
-   - Inżynieria cech (logarytmizacja, średnia artysty).
+   - Inżynieria cech (logarytmizacja, liczba piosenek wykonawcy).
    - Trening `ViewsPredictor` (Las Losowy).
    - Ewaluacja wyników (RMSE, R2).
    - Analiza przykładowych predykcji.
@@ -107,13 +107,13 @@ Notebook odpowiedzialny za trenowanie modeli.
 ### 5.2. Modele Uczenia Maszynowego
 
 #### Klasyfikacja Gatunków (Logistic Regression)
-Model klasyfikuje utwory na podstawie wektorów `word_vectors`.
+Model klasyfikuje utwory na podstawie zwektoryzowanego tesktu piosenek `word_vectors`.
 * **Accuracy**: 0.8181
 * **F1 Score**: 0.7871
 * **Weighted Precision**: 0.7762
 
 #### Predykcja Popularności (Random Forest Regressor)
-Model przewiduje zlogarytmowaną liczbę wyświetleń, wykorzystując Word2Vec oraz średnią historyczną popularność artysty (`artist_avg_views`).
+Model przewiduje zlogarytmowaną liczbę wyświetleń, wykorzystując zwektoryzowane teskty piosenek `word_vectors`, gatunek muzyki `tag` oraz liczbę utworów wykonawcy (`artist_song_count`).
 * **RMSE**: 1.1353
 * **R2**: 0.7228
 
@@ -124,7 +124,7 @@ Model przewiduje zlogarytmowaną liczbę wyświetleń, wykorzystując Word2Vec o
 ### Trudności z cechą "artist"
 Podczas modelowania predykcji popularności, cecha `artist` stwarzała problemy techniczne. Bardzo duża liczba unikalnych artystów w połączeniu z małą liczbą utworów dla większości z nich uniemożliwiała skuteczne zastosowanie One-Hot Encodingu ze względu na generowanie ekstremalnie rzadkich macierzy i przekleństwo wymiarowości.
 
-**Zastosowane rozwiązanie:** Zamiast bezpośredniego użycia identyfikatora artysty, wprowadzono nową cechę: średnią liczbę wyświetleń wykonawcy wyliczoną na podstawie wszystkich jego utworów (`artist_avg_views`). Podejście to pozwoliło na skuteczną agregację informacji o popularności bez rozszerzania wymiarowości danych.
+**Zastosowane rozwiązanie:** Zamiast bezpośredniego użycia identyfikatora artysty, wprowadzono nową cechę: liczbę utworów wykonawcy (`artist_song_count`). Podejście to pozwoliło na skuteczną agregację informacji o popularności bez rozszerzania wymiarowości danych.
 
 ### Proponowane udoskonalenia
 * **Generator piosenek**: Rozbudowa projektu o moduł generatywny (np. model LSTM lub Transformer), który na bazie istniejących wektorów słów i stylu danego artysty byłby w stanie tworzyć autorskie teksty piosenek.
