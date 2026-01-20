@@ -117,6 +117,8 @@ Model przewiduje zlogarytmowaną liczbę wyświetleń, wykorzystując Word2Vec o
 * **RMSE**: 1.1353
 * **R2**: 0.7228
 
+**Transformacja zmiennej celu**: W procesie modelowania zdecydowano się na wykorzystanie zlogarytmowanej liczby wyświetleń. Decyzja ta wynikała z faktu, że surowa liczba wyświetleń charakteryzuje się silnie prawostronnym rozkładem skośnym (long tail) – nieliczne „hity” osiągają ekstremalnie wysokie wartości, podczas gdy większość utworów notuje znacznie mniejszą popularność.
+
 ## Napotkane trudności i proponowane udoskonalenia
 
 ### Trudności z cechą "artist"
