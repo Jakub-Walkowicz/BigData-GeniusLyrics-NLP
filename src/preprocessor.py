@@ -3,7 +3,7 @@ import pyspark.sql.functions as F
 class Preprocessor:
     @staticmethod
     def run(df):
-        df = df.na.drop(subset=['lyrics'])
+        df = df.na.drop(subset=['lyrics', 'artist', 'views'])
         df = df.filter(F.col('language') == 'pl')
         return df.withColumn('lyrics_cleaned', Preprocessor._clean_text_logic(F.col('lyrics')))
 
