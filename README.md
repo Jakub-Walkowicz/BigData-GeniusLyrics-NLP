@@ -2,14 +2,24 @@
 
 ## Spis Treści
 1. [Wprowadzenie](#wprowadzenie)
-2. [Architektura i technologie](#architektura-i-technologie)
-3. [Opis modułów](#opis-modułów)
-4. [Przepływ pracy (Notebooki)](#przepływ-pracy-notebooki)
-5. [Wyniki i ewaluacja](#wyniki-i-ewaluacja)
-6. [Napotkane trudności i proponowane udoskonalenia](#napotkane-trudności-i-proponowane-udoskonalenia)
+2. [Instrukcja uruchomienia](#instrukcja-uruchomienia)
+3. [Architektura i technologie](#architektura-i-technologie)
+4. [Opis modułów](#opis-modułów)
+5. [Przepływ pracy (Notebooki)](#przepływ-pracy-notebooki)
+6. [Wyniki i ewaluacja](#wyniki-i-ewaluacja)
+7. [Napotkane trudności i proponowane udoskonalenia](#napotkane-trudności-i-proponowane-udoskonalenia)
 
 ## Wprowadzenie
 Projekt ma na celu analizę i przetwarzanie dużych zbiorów danych tekstowych (teksty piosenek z serwisu Genius) przy użyciu technologii Big Data. Głównym celem jest przygotowanie danych, ekstrakcja cech z tekstu oraz budowa modeli uczenia maszynowego do klasyfikacji gatunków muzycznych i predykcji popularności utworów.
+
+Pochodzenie danych: https://www.kaggle.com/datasets/carlosgdcj/genius-song-lyrics-with-language-information/data
+
+## Instrukcja uruchomienia
+
+1. W wybranym katalogu na komputerze wykonać komendę: `git clone <adres_repozytorium>` oraz `cd <nazwa_katalogu_projektu>`.
+2. Plik .csv (źródło powyżej) należy umieścić w katalogu `data/` wewnątrz katalogu projektu.
+3. W głównym katalogu projektu uruchamiamy komendę `docker compose up -d --build`
+4. Notebooki uruchamiamy z poziomu UI JupyterLab `http://localhost:8888` w oznaczonej kolejności.
 
 ## Architektura i Technologie
 - **Apache Spark**: Główny silnik przetwarzania danych (PySpark).

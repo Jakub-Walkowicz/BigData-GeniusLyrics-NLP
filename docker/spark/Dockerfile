@@ -9,7 +9,14 @@ RUN apt-get update && apt-get install -y \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
+ENV HOME=/opt/spark
 WORKDIR /opt/spark/work-dir
 
 COPY requirements.txt /tmp/
 RUN pip install --no-cache-dir -r /tmp/requirements.txt
+
+COPY . .
+
+RUN chown -R 185:0 /opt/spark
+
+USER 185

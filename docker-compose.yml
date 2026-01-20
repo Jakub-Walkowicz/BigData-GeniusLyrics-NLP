@@ -27,7 +27,7 @@ services:
       cassandra:
         condition: service_healthy
     volumes:
-      - ./infrastructure/migration/init.cql:/init.cql
+      - ./infrastructure/migration/init.cql:/init.cql    
     command: /bin/bash -c "cqlsh cassandra -f /init.cql"
 
   spark-master:
@@ -41,14 +41,14 @@ services:
     ports:
       - '8080:8080'
       - '7077:7077'
+    volumes:
+      - ./data:/opt/spark/work-dir/data:ro
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8080" ]
       interval: 10s
       timeout: 5s
       retries: 3
       start_period: 10s
-    volumes:
-      - .:/opt/spark/work-dir
     command: /opt/spark/bin/spark-class org.apache.spark.deploy.master.Master
     deploy:
       resources:
@@ -62,13 +62,15 @@ services:
       dockerfile: ./docker/spark/Dockerfile
     env_file:
       - docker/spark/spark-worker.env
+    ports:
+      - '8081:8081'
     depends_on:
       spark-master:
         condition: service_healthy
       cassandra:
         condition: service_healthy
     volumes:
-      - .:/opt/spark/work-dir
+      - ./data:/opt/spark/work-dir/data:ro
     command: /opt/spark/bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077
     deploy:
       resources:
@@ -82,14 +84,14 @@ services:
       dockerfile: ./docker/spark/Dockerfile
     ports:
       - '8888:8888'
-    volumes:
-      - .:/opt/spark/work-dir
     env_file:
       - docker/spark/jupyter.env
+    volumes:
+      - ./data:/opt/spark/work-dir/data:ro
     depends_on:
       spark-master:
         condition: service_healthy
-    command: jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --NotebookApp.token='' --allow-root
+    command: jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --NotebookApp.token=''
     deploy:
       resources:
         limits:
