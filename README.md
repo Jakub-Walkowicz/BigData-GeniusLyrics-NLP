@@ -108,14 +108,14 @@ Notebook odpowiedzialny za trenowanie modeli.
 
 #### Klasyfikacja Gatunków (Logistic Regression)
 Model klasyfikuje utwory na podstawie zwektoryzowanego tesktu piosenek `word_vectors`.
-* **Accuracy**: 0.8181
-* **F1 Score**: 0.7871
-* **Weighted Precision**: 0.7762
+* **Accuracy**: 0.8148
+* **F1 Score**: 0.7756
+* **Weighted Precision**: 0.7764
 
 #### Predykcja Popularności (Random Forest Regressor)
 Model przewiduje zlogarytmowaną liczbę wyświetleń, wykorzystując zwektoryzowane teskty piosenek `word_vectors`, gatunek muzyki `tag` oraz liczbę utworów wykonawcy (`artist_song_count`).
-* **RMSE**: 1.1353
-* **R2**: 0.7228
+* **RMSE**: 1.6934
+* **R2**: 0.3598
 
 **Transformacja zmiennej celu**: W procesie modelowania zdecydowano się na wykorzystanie zlogarytmowanej liczby wyświetleń. Decyzja ta wynikała z faktu, że surowa liczba wyświetleń charakteryzuje się silnie prawostronnym rozkładem skośnym (long tail) – nieliczne „hity” osiągają ekstremalnie wysokie wartości, podczas gdy większość utworów notuje znacznie mniejszą popularność.
 
